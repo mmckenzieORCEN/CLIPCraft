@@ -7,29 +7,9 @@ import gzip
 import pandas as pd
 import torch
 import numpy
+import os
 
-#Internal function that extracts URL from user-input file
-def _extractURLFromFile(input_urls):
-    if isinstance(input_urls, str):  # Check if user input is a string
-        input_urls = [input_urls]  # Convert it to a list for processing
 
-    urls = []
-    for file_path in input_urls: 
-    # Detect file type based on extension
-        file_extension = file_path.rsplit('.', 1)[-1].lower()
-        #If the file extension is json, we can load the data and call our helper function
-        if file_extension == 'json':
-            with open(input_urls, 'r') as datafile:
-                data = json.load(datafile)
-                _extractURLFromJSON(data, urls)
-    else:
-        #If the file is not json, we read line by line and extract the data per line
-        with open(input_urls, 'r') as datafile:
-            for line in datafile:
-                url = line.strip()
-                if url:  # Skips empty lines
-                    urls.append(url)
-    return urls
     
 #Helper function to extract the URLs from a json file
 def _extractURLFromJSON(data, urls):
@@ -98,6 +78,34 @@ def _writeEmbeddingsToFile(type, input_image_embeddings, input_text_embeddings):
                 datafile.write(json.dumps(new_row) + '\n')
                 print("Successful dump #" + str(i + 1) + '\n')
 
+#Internal function that extracts URL from user-input file
+def _extractURLFromFile(input_urls):
+    if isinstance(input_urls, str):  # Check if user input is a string
+        input_urls = [input_urls]  # Convert it to a list for processing
+
+    url_count = 0
+    urls = []
+    for file_path in input_urls: 
+    # Detect file type based on extension
+        file_extension = os.path.splitext(file_path)[-1].lower()
+        #If the file extension is json, we can load the data and call our helper function
+        if file_extension == 'json':
+            with open(input_urls, 'r') as datafile:
+                data = json.load(datafile)
+                _extractURLFromJSON(data, urls)
+        elif file_extension == 'gz':
+             with gzip.open(input_urls, 'rt') as datafile:
+                data = json.load(datafile)
+                _extractURLFromJSON(data, urls)
+    else:
+        #If the file is not json, we read line by line and extract the data per line
+        with open(input_urls, 'r') as datafile:
+            for line in datafile:
+                url = line.strip()
+                if url:  # Skips empty lines
+                    urls.append(url)
+    return urls
+
 #Function for users to call to create Image embeddings
 def createImageEmbeddings(input_urls): 
 while True:
@@ -116,7 +124,7 @@ while True:
                              
     if isinstance(input_urls, list):
         embeddings = []
-        # Multiple URLs or file names provided
+        # Multiple files provided
         for url in input_urls:
             if isinstance(url, str):
                 # Process a file
@@ -228,3 +236,5 @@ def KNNSearchText(text_embeddings, image_embeddings):
         result.append((image_url, image, nearest_texts))
 
     return result
+
+file_urls = extractURLFromFile("first_100_rows.json.gz")
