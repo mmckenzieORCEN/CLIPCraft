@@ -6,7 +6,7 @@ More specifically, CLIPCraft contains user-friendly functions that are incredibl
 ## Features:
 
 **Embedding Extraction**: Extract embeddings for images and texts using CLIP. <br>
-**Image-to-Text**: Generate textual descriptions or captions for given images using CLIP. Currently, you must provide your own text embeddings. I am working on a zero-shot method. <br>
+**Image-to-Text**: Generate textual descriptions (captions) for given images using CLIP. Currently, you must provide your own list of captions. <br>
 **Text-to-Image from Embeddings**: Generate visual representations from embeddings for given texts using CLIP. 
 
 ## Installation
