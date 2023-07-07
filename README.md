@@ -26,8 +26,28 @@ CLIPCraft offers 4 functions for users to interact with; <br>
 **KNNSearchImage(text_embeddings, image_embeddings)** This function will find the nearest 10 similar images from given text embedding(s) list using K-Nearest-Neighbors. It is designed for use by providing the list returned from createTextEmbeddings. text_embeddings should be the return value of createTextEmbeddings, while image_embeddings should be the return value for createImageEmbeddings.<br>
 <br>
 
-**KNNSearchText(text_embeddings, image_embeddings)** This function will find the nearest 3 similar texts, as a caption, from a given image. It is designed for use by providing the list returned from createTextEmbeddings. text_embeddings should be the return value of createTextEmbeddings, while image_embeddings should be the return value for createImageEmbeddings.
+**KNNSearchText(text_embeddings, image_urls)** This function will find the most similar caption to a given image. It is designed for use by providing the list returned from createTextEmbeddings. text_embeddings should be the return value of createTextEmbeddings, while image_urls should be a single URL or a list of URLs. 
+
+## Example
+```python
+file_urls = ["first_100_rows.json.gz"]
+
+image_embeds = createImageEmbeddings(file_urls)
+
+text_embed_list = ["a man in a green jacket and a basketball player in a white shirt",  "Grandma with makeup", "Football player"]
+
+text_embeds = createTextEmbeddings(text_embed_list)
+
+KNNSearchImage(text_embeds, image_embeds)
+
+KNNSearchText(textembeds, ["https://www.outkick.com/wp-content/uploads/Nowell-Thomas.jpg"])
+```
+Note the arguments taken by the KNN functions are the return values of the previous external functions. <br>
+
+The output of KNNSearchImage will be 5 images with the closest euclidean distance in ascending order; that is, the closest being output first. The output of KNNSearchText will be a caption of the image based on the lowest euclidean distance between your list of input captions and the input image.
 
 ## Requirements
 
-The requirements for the package can be found in requirements.txt.
+The requirements for the package can be found in requirements.txt. However, note that these dependencies will be automatically installed when invoking the pip command. 
+
+
