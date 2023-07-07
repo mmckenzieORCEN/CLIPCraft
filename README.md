@@ -44,7 +44,8 @@ KNNSearchText(textembeds, ["https://www.outkick.com/wp-content/uploads/Nowell-Th
 ```
 Note the arguments taken by the KNN functions are the return values of the previous external functions. <br>
 
-The output of KNNSearchImage will be 5 images with the closest euclidean distance in ascending order; that is, the closest being output first. The output of KNNSearchText will be a caption of the image based on the lowest euclidean distance between your list of input captions and the input image.
+The output of KNNSearchImage will be 5 images with the closest euclidean distance in ascending order; that is, the closest related image being output first. <br>
+The output of KNNSearchText will be a caption of the image based on the lowest euclidean distance between your list of input captions and the input image.
 
 ## Requirements
 
