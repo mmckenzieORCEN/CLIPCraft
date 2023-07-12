@@ -30,17 +30,19 @@ CLIPCraft offers 4 functions for users to interact with; <br>
 
 ## Example
 ```python
+import clipcraft as cc
+
 file_urls = ["first_100_rows.json.gz"]
 
-image_embeds = createImageEmbeddings(file_urls)
+image_embeds = cc.createImageEmbeddings(file_urls)
 
 text_embed_list = ["a man in a green jacket and a basketball player in a white shirt",  "Grandma with makeup", "Football player"]
 
-text_embeds = createTextEmbeddings(text_embed_list)
+text_embeds = cc.createTextEmbeddings(text_embed_list)
 
-KNNSearchImage(text_embeds, image_embeds)
+cc.KNNSearchImage(text_embeds, image_embeds)
 
-KNNSearchText(textembeds, ["https://www.outkick.com/wp-content/uploads/Nowell-Thomas.jpg"])
+cc.KNNSearchText(textembeds, ["https://www.outkick.com/wp-content/uploads/Nowell-Thomas.jpg"])
 ```
 Note the arguments taken by the KNN functions are the return values of the previous external functions. <br>
 
