@@ -50,7 +50,7 @@ The output of KNNSearchImage will be 5 images with the closest euclidean distanc
 The output of KNNSearchText will be a caption of the image based on the lowest euclidean distance between your list of input captions and the input image.
 
 ## Requirements
-
+To run the functions from this package, you must install PyTorch, as the Hugging Face Transformers library is built on top of it. Instructions to do so can be found here: https://pytorch.org/get-started/locally/
 The requirements for the package can be found in requirements.txt. However, note that these dependencies will be automatically installed when invoking the pip command. 
 
 
