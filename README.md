@@ -42,7 +42,7 @@ text_embeds = cc.createTextEmbeddings(text_embed_list)
 
 cc.KNNSearchImage(text_embeds, image_embeds)
 
-cc.KNNSearchText(textembeds, ["https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Orange_tabby_cat_sitting_on_fallen_leaves-Hisashi-01A.jpg/800px-Orange_tabby_cat_sitting_on_fallen_leaves-Hisashi-01A.jpg"])
+cc.KNNSearchText(text_embeds, ["https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Orange_tabby_cat_sitting_on_fallen_leaves-Hisashi-01A.jpg/800px-Orange_tabby_cat_sitting_on_fallen_leaves-Hisashi-01A.jpg"])
 ```
 Note the arguments taken by the KNN functions are the return values of the previous external functions. <br>
 
