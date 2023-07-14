@@ -5,6 +5,7 @@ import requests
 import json
 import gzip
 import os
+from io import BytesIO
 
 # Helper function to extract the URLs from a json file
 def _extractURLFromJSON(data, urls):
@@ -78,7 +79,7 @@ def _writeEmbeddingsToFile(type, input_image_embeddings = None, input_text_embed
                     'text_embedding': input_text_embeddings[i][1],
                 }
                 datafile.write(json.dumps(new_row) + '\n')
-                j + 1
+                j += 1
         print("Successfully dumped #" + str(i) + " embeddings to file." + '\n')
 
 # Internal function that extracts URL from user-input file
@@ -113,7 +114,7 @@ def _extractURLFromFile(input_urls):
 # User-callable for users to call to create Image embeddings
 def createImageEmbeddings(input_urls): 
     while True:
-        output_type = input("Enter the desired output type (list or file): ")
+        output_type = input("Enter the desired output type for the image embeddings (list or file): ")
 
         if output_type in ["list", "file"]:
             break
@@ -123,21 +124,24 @@ def createImageEmbeddings(input_urls):
     embeddings = []
     if isinstance(input_urls, str):
     # Read the file and process its contents
-        url_list = _extractURLFromFile(input_urls)
-        embeddings.extend(_imageEmbeddings(url_list))
+        if input_urls.startswith("http"):
+            embeddings.extend(_imageEmbeddings([input_urls]))
+        else:
+            url_list = _extractURLFromFile(input_urls)
+            embeddings.extend(_imageEmbeddings(url_list))
                              
     if isinstance(input_urls, list):
         embeddings = []
         # Multiple files provided
         for url in input_urls:
-            if isinstance(url, str):
+            if isinstance(url, str) and url.startswith('http'):
+                # Process a URL
+                embeddings.extend(_imageEmbeddings([url]))
+            elif isinstance(url, str):
                 # Process a file
                 url_list = _extractURLFromFile(url)
-                embeddings = _imageEmbeddings(url_list)
-            elif isinstance(url, str) and url.startswith('http'):
-                # Process a URL
-                for i in url_list:
-                    embeddings=((url, _imageEmbeddings(url)))
+                embeddings.extend(_imageEmbeddings(url_list))
+
 
     print("All image embeddings finished.")
     if output_type == "list":
@@ -152,7 +156,7 @@ def createImageEmbeddings(input_urls):
 # User-callable function to generate text embeddings from CLIP
 def createTextEmbeddings(input_text):
     while True:
-        output_type = input("Enter the desired output type (list or file): ")
+        output_type = input("Enter the desired output type for the text embeddings (list or file): ")
 
         if output_type in ["list", "file"]:
             break

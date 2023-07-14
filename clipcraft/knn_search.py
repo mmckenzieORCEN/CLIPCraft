@@ -2,6 +2,38 @@ from PIL import Image
 import numpy as np
 import requests
 from io import BytesIO
+from transformers import CLIPProcessor, CLIPModel, CLIPTokenizer
+from PIL import Image
+import numpy as np
+import requests
+from io import BytesIO
+
+# Internal function to generate our image embeddings
+def _imageEmbeddings(url_list):
+    # Loading pre-trained CLIP model/processor
+    model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")  
+    processor = CLIPProcessor.from_pretrained("openai/clip-vit-base-patch32")
+    url_embeddings_list = []
+    # Looping through each value in the input list
+    for url in url_list:
+        try:
+            # Grabbing our image. Timeout for URLs that are unretrievable. 5 secs for slow retrieval.
+            response = requests.get(url, timeout = 5)  
+            content_type = response.headers.get('content-type')
+            image = Image.open(BytesIO(response.content))
+            #Inputs for the model; Can't change text inputs or get an exception
+            inputs = processor(text=["a photo of a cat", "a photo of a dog"], images=image, return_tensors="pt", padding=True) 
+
+            outputs = model(**inputs)
+            logits_per_image = outputs.logits_per_image  # this is the image-text similarity score
+            probs = logits_per_image.softmax(dim=1)  # we can take the softmax to get the label probabilities
+            # Getting the image embeds from the model and adding them to our list with the origin URL
+            embeddings = outputs.image_embeds[0].detach().numpy().tolist()
+            url_embeddings_list.append((url, embeddings))
+        except Exception as e:
+            print(f"Skipping URL: {url}")
+            print(e)
+    return url_embeddings_list
 
 # User-callable function to display KNN, or most similar images to given text
 def KNNSearchImage(text_embeddings, image_embeddings):
@@ -40,7 +72,8 @@ def KNNSearchImage(text_embeddings, image_embeddings):
         for image, image_url in nearest_images:
             print("Image URL:", image_url)
             display(image)
-        print('5 most similar images displayed for text input. \n')
+        print('Most similar image(s) displayed for text input. \n')
+ 
         
 # User-callable function to display KNN, or most similar text given an image
 def KNNSearchText(text_embeddings, image_urls):
