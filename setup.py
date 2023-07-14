@@ -17,5 +17,6 @@ setup(
         "Pillow",
         "numpy",
         "requests",
+        "pytorch",
     ],
 )
