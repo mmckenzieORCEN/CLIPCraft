@@ -13,7 +13,7 @@ setup(
     packages=["clipcraft"],
     long_description=long_description,
     long_description_content_type='text/markdown',
-    url=https://github.com/mmckenzieORCEN/CLIPCraft,
+    url='https://github.com/mmckenzieORCEN/CLIPCraft',
     install_requires=[
         "transformers",
         "Pillow",
