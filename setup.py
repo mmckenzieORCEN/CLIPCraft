@@ -9,7 +9,7 @@ setup(
     version="1.1",
     description="A package for CLIP-based image and text processing.",
     author='Morgan McKenzie',
-    author_email='morgancmckenziecs@gmail.com'
+    author_email='morgancmckenziecs@gmail.com',
     packages=["clipcraft"],
     long_description=long_description,
     long_description_content_type='text/markdown',
