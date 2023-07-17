@@ -17,10 +17,10 @@ pip install clipcraft
 
 CLIPCraft offers 4 functions for users to interact with; <br>
 <br>
-**createImageEmbeddings(input_urls)** This function creates image embeddings from a file containing URLs, where input_urls is a string of a filename or a list of strings of filenames. It returns a list of tuples, where the 0<sup>th</sup> value is the image URL, and the 1<sup>st</sup> value is the resulting embedding.<br>
+**createImageEmbeddings(input_urls, output_type)** This function creates image embeddings from a file containing URLs, where input_urls is a string of a filename or a list of strings of filenames, and output_type is the type of output desired for the embeddings; "list" or "file". It returns a list of tuples, where the 0<sup>th</sup> value is the image URL, and the 1<sup>st</sup> value is the resulting embedding.<br>
 <br>
 
-**createTextEmbeddings(input_text)** This function creates text embeddings from a user-input string of text or list of strings of text. It returns a list of tuples, where the 0<sup>th</sup> value is the raw text, and the 1<sup>st</sup> value is the resulting embedding. <br>
+**createTextEmbeddings(input_text, output_type)** This function creates text embeddings from a user-input string of text or list of strings of text. output_type is the type of output desired for the embeddings; "list" or "file". It returns a list of tuples, where the 0<sup>th</sup> value is the raw text, and the 1<sup>st</sup> value is the resulting embedding. <br>
 <br>
 
 **KNNSearchImage(text_embeddings, image_embeddings)** This function will find the nearest 10 similar images from given text embedding(s) list using K-Nearest-Neighbors. It is designed for use by providing the list returned from createTextEmbeddings. text_embeddings should be the return value of createTextEmbeddings, while image_embeddings should be the return value for createImageEmbeddings.<br>
@@ -34,11 +34,11 @@ import clipcraft as cc
 
 file_urls = "https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Orange_tabby_cat_sitting_on_fallen_leaves-Hisashi-01A.jpg/800px-Orange_tabby_cat_sitting_on_fallen_leaves-Hisashi-01A.jpg"
 
-image_embeds = cc.createImageEmbeddings(file_urls)
+image_embeds = cc.createImageEmbeddings(file_urls, "list")
 
 text_embed_list = ["a picture of a cat"]
 
-text_embeds = cc.createTextEmbeddings(text_embed_list)
+text_embeds = cc.createTextEmbeddings(text_embed_list, "list")
 
 cc.KNNSearchImage(text_embeds, image_embeds)
 
