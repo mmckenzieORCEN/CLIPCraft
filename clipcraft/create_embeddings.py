@@ -112,15 +112,10 @@ def _extractURLFromFile(input_urls):
 
 
 # User-callable for users to call to create Image embeddings
-def createImageEmbeddings(input_urls): 
-    while True:
-        output_type = input("Enter the desired output type for the image embeddings (list or file): ")
-
-        if output_type in ["list", "file"]:
-            break
-        else:
-            print("Invalid output type. Expected 'list' or 'file'. Please try again")
-    
+def createImageEmbeddings(input_urls, output_type): 
+    if output_type not in ["list", "file"]:
+        raise ValueError("Invalid output type. Expected 'list' or 'file'")
+            
     embeddings = []
     if isinstance(input_urls, str):
     # Read the file and process its contents
@@ -154,14 +149,9 @@ def createImageEmbeddings(input_urls):
 
                 
 # User-callable function to generate text embeddings from CLIP
-def createTextEmbeddings(input_text):
-    while True:
-        output_type = input("Enter the desired output type for the text embeddings (list or file): ")
-
-        if output_type in ["list", "file"]:
-            break
-        else:
-            print("Invalid output type. Expected 'list' or 'file'. Please try again")
+def createTextEmbeddings(input_text, output_type):
+    if output_type not in ["list", "file"]:
+        raise ValueError("Invalid output type. Expected 'list' or 'file'")
             
     text_embedding_list = []
     if isinstance(input_text, str):  # Check if user input is a string instead of list
