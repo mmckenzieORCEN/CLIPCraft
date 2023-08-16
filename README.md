@@ -23,7 +23,7 @@ CLIPCraft offers 4 functions for users to interact with; <br>
 **createTextEmbeddings(input_text, output_type)** This function creates text embeddings from a user-input string of text or list of strings of text. output_type is the type of output desired for the embeddings; "list" or "file". It returns a list of tuples, where the 0<sup>th</sup> value is the raw text, and the 1<sup>st</sup> value is the resulting embedding. <br>
 <br>
 
-**KNNSearchImage(text_embeddings, image_embeddings)** This function will find the nearest 10 similar images from given text embedding(s) list using K-Nearest-Neighbors. It is designed for use by providing the list returned from createTextEmbeddings. text_embeddings should be the return value of createTextEmbeddings, while image_embeddings should be the return value for createImageEmbeddings.<br>
+**KNNSearchImage(text_embeddings, image_embeddings, display_amount)** This function will find the nearest 10 similar images from given text embedding(s) list using K-Nearest-Neighbors. It is designed for use by providing the list returned from createTextEmbeddings. text_embeddings should be the return value of createTextEmbeddings, while image_embeddings should be the return value for createImageEmbeddings. display_amount is the amount of related images to be returned.<br>
 <br>
 
 **KNNSearchText(text_embeddings, image_urls)** This function will find the most similar caption to a given image. It is designed for use by providing the list returned from createTextEmbeddings. text_embeddings should be the return value of createTextEmbeddings, while image_urls should be a single URL or a list of URLs. 
@@ -40,13 +40,13 @@ text_embed_list = ["a picture of a cat"]
 
 text_embeds = cc.createTextEmbeddings(text_embed_list, "list")
 
-cc.KNNSearchImage(text_embeds, image_embeds)
+cc.KNNSearchImage(text_embeds, image_embeds, 10)
 
 cc.KNNSearchText(text_embeds, ["https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Orange_tabby_cat_sitting_on_fallen_leaves-Hisashi-01A.jpg/800px-Orange_tabby_cat_sitting_on_fallen_leaves-Hisashi-01A.jpg"])
 ```
 Note the arguments taken by the KNN functions are the return values of the previous external functions. <br>
 
-The output of KNNSearchImage will be 5 images with the closest euclidean distance in ascending order; that is, the closest related image being output first. <br>
+The output of KNNSearchImage will be your specified amount images with the closest euclidean distance in ascending order; that is, the closest related image being output first. <br>
 The output of KNNSearchText will be a caption of the image based on the lowest euclidean distance between your list of input captions and the input image.
 
 ## Requirements
