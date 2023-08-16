@@ -36,7 +36,7 @@ def _imageEmbeddings(url_list):
     return url_embeddings_list
 
 # User-callable function to display KNN, or most similar images to given text
-def KNNSearchImage(text_embeddings, image_embeddings):
+def KNNSearchImage(text_embeddings, image_embeddings, display_amount):
      #Since we returned the image embeddings as a list of tuples, we grab the embedding tuples
     image_embeddings_array = np.stack([embedding for _, embedding in image_embeddings])
     text_embeddings_array = np.stack([embedding for _, embedding in text_embeddings])
@@ -49,7 +49,7 @@ def KNNSearchImage(text_embeddings, image_embeddings):
         distances = np.linalg.norm(image_embeddings_array - text_embeddings_array[i], axis=1)
 
         # Grab the indexes of the top 5 similar images
-        index_5_similar = np.argsort(distances)[:5]
+        index_5_similar = np.argsort(distances)[:display_amount]
         # Retrieve the nearest URLs based on the indices
         nearest_images = []
         # Loop through each index in the index list
