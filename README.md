@@ -32,11 +32,11 @@ CLIPCraft offers 4 functions for users to interact with; <br>
 ```python
 import clipcraft as cc
 
-file_urls = "https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Orange_tabby_cat_sitting_on_fallen_leaves-Hisashi-01A.jpg/800px-Orange_tabby_cat_sitting_on_fallen_leaves-Hisashi-01A.jpg"
+file_urls = "file_with_image_urls.json.gz"
 
 image_embeds = cc.createImageEmbeddings(file_urls, "list")
 
-text_embed_list = ["a picture of a cat"]
+text_embed_list = ["a picture of a cat", "man in a red shirt"]
 
 text_embeds = cc.createTextEmbeddings(text_embed_list, "list")
 
